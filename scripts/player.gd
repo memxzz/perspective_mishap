@@ -137,7 +137,9 @@ func cancelAxis(vector,basis):
 	var forward_component = move_dir.dot(forward_dir)
 	move_dir -= forward_component * forward_dir
 	move_dir = move_dir.normalized()
-	return Vector3(move_dir.x,0,move_dir.z)
+	var ret = Vector3(move_dir.x,0,move_dir.z)
+	print(ret) #-debug
+	return ret
 func move_not_forward(basis): #get movement for 2d
 	var input2vec = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	input_dir = Vector3(

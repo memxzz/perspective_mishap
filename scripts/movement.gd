@@ -15,9 +15,13 @@ func extraForce():
 	if plr.extraForceTime > 0:
 		if GlobalVars.vars.worldMode == 1:
 			
-			var axis = plr.cancelAxis(plr.extraForce,plr.camNode.transform.basis) * plr.extraForce
+			var axis = plr.cancelAxis(plr.extraForce,plr.camNode.transform.basis) * Vector3(
+				abs(plr.extraForce.x),
+				abs(plr.extraForce.y),
+				abs(plr.extraForce.z)
+				)
 			
-			plr.targetVel = axis * plr.extraForceDir
+			plr.targetVel = axis
 		else:
 			plr.targetVel = plr.extraForce
 		
