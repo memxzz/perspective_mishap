@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dcj6dqrvr60ap"
+path="res://.godot/imported/tengo miedo porfavor ayuda.mp3-6b1bea90242f0f1411e45cd2a59c858d.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/music/tengo miedo porfavor ayuda.mp3"
+dest_files=["res://.godot/imported/tengo miedo porfavor ayuda.mp3-6b1bea90242f0f1411e45cd2a59c858d.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

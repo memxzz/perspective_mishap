@@ -1,0 +1,156 @@
+[gd_scene load_steps=16 format=3 uid="uid://cn6vcp3fghceq"]
+
+[ext_resource type="Script" uid="uid://bv4oyfercha15" path="res://scripts/scenes/level_selector/main.gd" id="1_k10b2"]
+[ext_resource type="Script" uid="uid://yxjxtaiadgft" path="res://scripts/scenes/level_selector/player.gd" id="2_g8rv5"]
+[ext_resource type="Texture2D" uid="uid://dpvosettekqi0" path="res://assets/textures/UI/level-selector/player.png" id="3_5olco"]
+[ext_resource type="PackedScene" uid="uid://crh0icjwjtdti" path="res://assets/sceneOnly/levelSelector/place.tscn" id="4_ifm5o"]
+[ext_resource type="PackedScene" uid="uid://bllwpf3ij4g67" path="res://levels/tutorial.tscn" id="5_pky2m"]
+[ext_resource type="Script" uid="uid://b1rrdvv8imcbs" path="res://scripts/scenes/level_selector/lvl_info.gd" id="7_dhjth"]
+[ext_resource type="Texture2D" uid="uid://cy5cdn224ud45" path="res://icon.svg" id="8_yeqli"]
+
+[sub_resource type="Gradient" id="Gradient_25xi4"]
+colors = PackedColorArray(0.827451, 1, 1, 1, 9.02452e-08, 0.120296, 0.121813, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_8blsy"]
+gradient = SubResource("Gradient_25xi4")
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_mbnnl"]
+panorama = SubResource("GradientTexture1D_8blsy")
+
+[sub_resource type="Sky" id="Sky_ddfyh"]
+sky_material = SubResource("PanoramaSkyMaterial_mbnnl")
+
+[sub_resource type="Environment" id="Environment_g1ktc"]
+background_mode = 1
+background_color = Color(1, 0.913377, 0.779756, 1)
+sky = SubResource("Sky_ddfyh")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ntnbt"]
+albedo_color = Color(1, 0.576471, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qhgh5"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bawqm"]
+texture = ExtResource("8_yeqli")
+
+[node name="Menu" type="Node3D"]
+script = ExtResource("1_k10b2")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_g1ktc")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(74.661, 0, 0, 0, 0.222, 0, 0, 0, 74.369, 0, -2.79696, 5.92876)
+material_override = SubResource("StandardMaterial3D_ntnbt")
+mesh = SubResource("BoxMesh_qhgh5")
+
+[node name="player" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.553839, 11.3722)
+script = ExtResource("2_g8rv5")
+
+[node name="Sprite3D" type="Sprite3D" parent="player"]
+transform = Transform3D(0.690464, 0, 0, 0, 0.690464, 0, 0, 0, 0.690464, 0, 1.36597, 0.00884342)
+billboard = 1
+texture = ExtResource("3_5olco")
+
+[node name="Camera3D" type="Camera3D" parent="player"]
+transform = Transform3D(1, 0, 0, 0, 0.975799, 0.218671, 0, -0.218671, 0.975799, 0, 9.58991, 16.2827)
+projection = 1
+current = true
+size = 25.06
+near = 0.028
+
+[node name="places" type="Node3D" parent="."]
+
+[node name="0" parent="places" node_paths=PackedStringArray("right") instance=ExtResource("4_ifm5o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.286, 0, 0)
+right = NodePath("../1")
+haveInfo = false
+
+[node name="1" parent="places" node_paths=PackedStringArray("left", "down") instance=ExtResource("4_ifm5o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.23748, 0, 0)
+left = NodePath("../0")
+down = NodePath("../2")
+level = ExtResource("5_pky2m")
+levelName = "Tutorial"
+description = "puta mierda"
+levelIcon = "res://assets/textures/UI/level-selector/placeholder.png"
+
+[node name="2" parent="places" node_paths=PackedStringArray("up") instance=ExtResource("4_ifm5o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.23748, 0, 24.1073)
+up = NodePath("../1")
+levelName = "porfavor."
+description = "."
+levelIcon = "res://assets/textures/UI/level-selector/player.png"
+
+[node name="Node" type="Node" parent="places"]
+
+[node name="Node2" type="Node" parent="places"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchor_right = 1.0
+anchor_bottom = 0.999
+offset_bottom = -0.280029
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="lvlInfo" type="Panel" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.214
+anchor_top = 0.086
+anchor_right = 0.802
+anchor_bottom = 0.398
+offset_left = 0.0799866
+offset_top = 0.165997
+offset_right = 0.439941
+offset_bottom = -0.162018
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("7_dhjth")
+
+[node name="icon" type="Panel" parent="CanvasLayer/Control/lvlInfo"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.039
+anchor_top = 0.116
+anchor_right = 0.26
+anchor_bottom = 0.812
+offset_left = -0.367001
+offset_top = 0.0159988
+offset_right = 0.219986
+offset_bottom = 0.112
+theme_override_styles/panel = SubResource("StyleBoxTexture_bawqm")
+
+[node name="lvlName" type="Label" parent="CanvasLayer/Control/lvlInfo"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.282
+anchor_top = 0.152
+anchor_right = 0.91
+anchor_bottom = 0.397
+offset_left = -0.346008
+offset_top = -0.0480042
+offset_right = -0.230042
+offset_bottom = 0.0719986
+text = "Name
+"
+
+[node name="description" type="Label" parent="CanvasLayer/Control/lvlInfo"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.284
+anchor_top = 0.433
+anchor_right = 0.91
+anchor_bottom = 0.679
+offset_left = 0.147995
+offset_top = 0.00799561
+offset_right = 1.76996
+offset_bottom = -0.0960083
+text = "Name
+"

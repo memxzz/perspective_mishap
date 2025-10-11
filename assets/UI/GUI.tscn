@@ -1,0 +1,98 @@
+[gd_scene load_steps=11 format=3 uid="uid://c8c4msgn4i3fa"]
+
+[ext_resource type="Script" uid="uid://d1ixanffu2gxs" path="res://scripts/UI/gameplay.gd" id="1_3iev6"]
+[ext_resource type="Shader" uid="uid://dohcmyop0pmew" path="res://shaders/health.gdshader" id="2_ftnvg"]
+[ext_resource type="Texture2D" uid="uid://cmev34iyjaui4" path="res://assets/textures/UI/gameplay/icon/facelesss.png" id="3_838f6"]
+[ext_resource type="Texture2D" uid="uid://cpndfkubh37l7" path="res://assets/textures/UI/gameplay/icon/1.png" id="4_suuq3"]
+
+[sub_resource type="Gradient" id="Gradient_i5sre"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_drxle"]
+gradient = SubResource("Gradient_i5sre")
+fill_from = Vector2(0.517094, 0.162393)
+fill_to = Vector2(0.512821, 0.833333)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6gtnm"]
+shader = ExtResource("2_ftnvg")
+shader_parameter/Dtexture = SubResource("GradientTexture2D_drxle")
+shader_parameter/val = 0.0
+shader_parameter/color = Vector4(1, 1, 1, 1)
+
+[sub_resource type="Theme" id="Theme_nch88"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_p7r10"]
+texture = ExtResource("3_838f6")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jtju6"]
+texture = ExtResource("4_suuq3")
+
+[node name="Gui" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_3iev6")
+
+[node name="FPS" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.216
+anchor_bottom = 0.035
+offset_right = 0.167999
+offset_bottom = 0.32
+
+[node name="health" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="icon" type="Panel" parent="health"]
+material = SubResource("ShaderMaterial_6gtnm")
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.01
+anchor_top = 0.784
+anchor_right = 0.122
+anchor_bottom = 1.018
+offset_left = 0.530001
+offset_top = 0.18396
+offset_right = 0.529999
+offset_bottom = 0.317932
+mouse_filter = 2
+theme = SubResource("Theme_nch88")
+theme_override_styles/panel = SubResource("StyleBoxTexture_p7r10")
+
+[node name="iconOutline" type="Panel" parent="health"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.001
+anchor_top = 0.804
+anchor_right = 0.112
+anchor_bottom = 1.0
+offset_left = -0.153
+offset_top = -0.796021
+offset_right = -0.0250092
+offset_bottom = -0.796021
+pivot_offset = Vector2(64.056, 0)
+mouse_filter = 2
+theme = SubResource("Theme_nch88")
+theme_override_styles/panel = SubResource("StyleBoxTexture_jtju6")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0

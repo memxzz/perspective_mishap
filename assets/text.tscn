@@ -1,0 +1,59 @@
+[gd_scene load_steps=3 format=3 uid="uid://b1huuxpvc506"]
+
+[ext_resource type="Script" uid="uid://caiisvv3lmiiu" path="res://scripts/text3d.gd" id="1_xid4a"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_xid4a"]
+viewport_path = NodePath("Node3D/SubViewport")
+
+[node name="Text" type="Node3D"]
+script = ExtResource("1_xid4a")
+distance = 20.0
+alphaOffset = 0.3
+
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="Sprite3D" type="Sprite3D" parent="Node3D"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+texture = SubResource("ViewportTexture_xid4a")
+
+[node name="SubViewport" type="SubViewport" parent="Node3D"]
+transparent_bg = true
+size = Vector2i(900, 512)
+
+[node name="Control" type="Control" parent="Node3D/SubViewport"]
+layout_mode = 3
+anchor_right = 0.998
+anchor_bottom = 0.994
+offset_right = 0.303955
+offset_bottom = -0.112
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Node3D/SubViewport/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.016
+anchor_top = 0.105
+anchor_right = 1.006
+anchor_bottom = 1.006
+offset_left = 109.975
+offset_top = 3.38032
+offset_right = -453.525
+offset_bottom = -286.864
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
+pivot_offset = Vector2(0, 3.225)
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.385493, 0.385492, 0.385492, 1)
+theme_override_constants/table_v_separation = 0
+theme_override_constants/outline_size = 8
+bbcode_enabled = true
+text = "[color=green]text1[/color]
+[u]text2[/u]
+[outline_color=blue]text3[/outline_color]
+[color=red]text3[/color]
+[wave amp=50.0 freq=5.0 connected=1]text4[/wave]
+[tornado radius=10.0 freq=1.0 connected=1]text5[/tornado]
+[shake rate=20.0 level=5 connected=1]text6[/shake]"
+fit_content = true
+scroll_active = false
+threaded = true

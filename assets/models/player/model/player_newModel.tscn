@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://dvjxlvsy30ixk"]
+
+[ext_resource type="PackedScene" uid="uid://b8s2v1nldelar" path="res://assets/models/playerNewModel.glb" id="1_lgd3y"]
+
+[node name="playerNew" instance=ExtResource("1_lgd3y")]
+
+[node name="Skeleton3D" parent="Armature" index="0"]
+bones/11/rotation = Quaternion(-0.72893, -0.00596795, -0.00848317, 0.68451)
+bones/12/rotation = Quaternion(-0.0026765, -4.13763e-05, 0.0227073, 0.999739)
+bones/14/rotation = Quaternion(-0.729484, 0.0626961, -0.0566724, 0.678757)
+bones/15/rotation = Quaternion(0.00224139, 4.53658e-05, -0.0159724, 0.99987)
+bones/19/rotation = Quaternion(-0.00987137, -0.00014506, 0.999843, -0.0146982)
+
+[node name="Plane_2" parent="Armature/Skeleton3D" index="0"]
+transform = Transform3D(-1.17938e-07, 0.306205, 0.000149917, -0.306193, -1.09922e-06, 0.00503568, 0.00320843, -9.551e-05, 0.480576, 0.35202, 1.31933, -0.0146007)
+
+[node name="Plane" parent="." index="4"]
+transform = Transform3D(-0.000152583, 0.306205, 0.00019914, 0.00315507, -0.000125299, 0.480577, 0.306194, 0.00015388, -0.00495184, 0.352434, -0.0144752, 0.384175)

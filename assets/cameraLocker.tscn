@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://dohtr7i7of1vq"]
+
+[ext_resource type="Script" uid="uid://djbo5dntlqyv8" path="res://scripts/camera_locker.gd" id="1_wgfsy"]
+
+[node name="CameraLocker" type="Node3D"]
+script = ExtResource("1_wgfsy")
+fov = 90.0
+size = 14.0
+lock = true
+lockVelocity = 15.0
+onlyOneWorldMode = true
+worldMode = 1
+
+[node name="cameraPlace" type="Node3D" parent="."]
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]

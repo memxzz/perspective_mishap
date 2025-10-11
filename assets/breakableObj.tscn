@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://birc8pxqfsrb7"]
+
+[ext_resource type="Script" uid="uid://cvdur8lc540g" path="res://scripts/breakModelScript.gd" id="1_b8mrf"]
+
+[node name="BreakableObj" type="Node3D"]
+script = ExtResource("1_b8mrf")

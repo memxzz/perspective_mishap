@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://d8yxyknn7rin"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k5jlr"]
+resource_local_to_scene = true
+shading_mode = 0
+
+[node name="PlayerClone" type="MeshInstance3D"]
+material_override = SubResource("StandardMaterial3D_k5jlr")

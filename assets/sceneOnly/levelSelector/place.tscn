@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://crh0icjwjtdti"]
+
+[ext_resource type="Script" uid="uid://cxt7b6n0b1uda" path="res://scripts/scenes/level_selector/placeScript.gd" id="1_6i7oh"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_7erah"]
+
+[node name="0" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.9039, 0, 0)
+script = ExtResource("1_6i7oh")
+haveInfo = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_7erah")
+
+[node name="Place" type="Node3D" parent="."]
