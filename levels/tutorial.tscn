@@ -475,6 +475,13 @@ texture = ExtResource("11_l72w7")
 [node name="Test" parent="Node" instance=ExtResource("11_jfmsd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.9866, 5.65434, 0)
 
+[node name="CharacterBody3D" parent="Node/Test" index="0"]
+stats = {
+&"health": 100.0,
+&"jump_vel": 10.0,
+&"speed": 10.0
+}
+
 [editable path="nohitboxAffectedObjects/cameras/CameraLocker"]
 [editable path="nohitboxAffectedObjects/Wall"]
 [editable path="nohitboxAffectedObjects/Wall/normal"]
@@ -489,3 +496,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.9866, 5.65434, 0)
 [editable path="nohitboxAffectedObjects/ChangeButton"]
 [editable path="nohitboxAffectedObjects/ChangeButton2"]
 [editable path="nohitboxAffectedObjects/texts/Text"]
+[editable path="Node/Test"]
