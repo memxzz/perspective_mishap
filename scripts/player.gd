@@ -100,7 +100,7 @@ var playerStates: Dictionary = {
 	running = false,
 	health = 100.0,
 	dead = false,
-	hitted = false,
+	inKnockback = false,
 	#actions
 	inSlash = false,
 	inLongJump = false,
@@ -120,7 +120,7 @@ const cameraConfs: Dictionary = {
 }
 
 #all extra functions
-func handleTime(delta):
+func handleTime(delta) -> void:
 	if playerStates.inAir == false and timeStats.fallTime > 0:
 		timeStats.fallTime = 0
 		inercy = false
@@ -148,7 +148,7 @@ func move_not_forward(basis): #get movement for 2d
 	)
 	var newVector = cancelAxis(input_dir,basis)
 	return newVector * stats.speed
-func spawn():
+func spawn() -> void:
 	playerStates.health = 100
 	playerStates.dead = false
 	global_position = spawnPoint
@@ -158,7 +158,7 @@ func spawn():
 	camera.lockVelocity = 2.3
 	camera.locked = false
 	deadConditions.height = false
-func die():
+func die() -> void:
 	if playerStates.dead == true:return
 	playerStates.health = 0
 	playerStates.dead = true
@@ -177,7 +177,13 @@ func die():
 	musicNode.transitionSpeed = .5
 	await get_tree().create_timer(5).timeout
 	spawn()
-func playerSetStates():
+func _damage(props: Dictionary) -> void:
+	var damager = props.damager
+	var damage = props.damage
+	var knockbackForce = props.knockbackForce
+	playerStates.health -= damage
+	movement._knockBack(damager.global_position,knockbackForce)
+func playerSetStates() -> void:
 	if extraForceTime <= 0 and extraVelocityConstant == false :
 		playerStates.inSlash = false
 	if playerStates.inAir == true and velocity.y == 0:
@@ -194,7 +200,7 @@ func inputOnFloor() -> void:
 		playerActions.action2()
 func _input(event: InputEvent) -> void: #all input
 	if playerStates.dead:return
-	if event is InputEventKey and playerStates.hitted == false:
+	if event is InputEventKey and playerStates.inKnockback == false:
 		if event.keycode == KEY_SPACE and event.pressed: #jump/double jump
 			playerActions.action1()
 			playerActions.action2()
@@ -216,7 +222,7 @@ func _input(event: InputEvent) -> void: #all input
 			playerStates.health -= 1
 		if event.keycode == KEY_7 and event.pressed:
 			playerStates.health += 1
-func visualPlayerAngle(delta):
+func visualPlayerAngle(delta) -> void:
 	if playerDirection != Vector3.ZERO and keepDirectionOnExtraForce == false:
 		var target = dummy.global_position+playerDirection
 		if inercy == true:
@@ -263,14 +269,14 @@ func _physics_process(delta: float) -> void:
 	playerActions.actions_conditions(delta)
 	playerActions.advantages_conditions(delta)
 	move_and_slide()
-func collMask():
+func collMask() -> void:
 	if GlobalVars.vars.worldMode == 1:
 		set_collision_mask_value(1,false)
 		set_collision_mask_value(2,true)
 	else:
 		set_collision_mask_value(1,true)
 		set_collision_mask_value(2,false)
-func constantDeathConditions():
+func constantDeathConditions() -> void:
 	if GlobalVars.vars.actualScene == null:return
 	if playerStates.health <= 0: #die by life
 		die()

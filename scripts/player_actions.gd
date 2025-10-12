@@ -5,7 +5,8 @@ var advantages: Dictionary = {
 var actions: Dictionary = {
 	wallJump = false,
 	canJump = false,
-	canSlash = false
+	canSlash = false,
+	inWallJump = false
 }
 var actionsVariables = {
 	tripleJump = {
@@ -41,6 +42,8 @@ func actions_conditions(delta):
 	else:
 		actions.wallJump = false
 	#jumping
+	if actions.inWallJump == true and plr.playerStates.inAir == false:
+		actions.inWallJump = false
 	if plr.playerStates.inAir == false or (GlobalVars.vars.worldMode == 1 and plr.timesJumpedMidAir < 1 and plr.playerStates.inAir == true) or advantages.jump == true:
 		actions.canJump = true
 		
@@ -101,12 +104,14 @@ func action2(): #wall jump
 		plr.extraForce.y = force.y
 		plr.extraForceTime = .15
 		plr.inercy = true
+		actions.inWallJump = true
 		actions.canWallJump = false
 func action3(): #slash/long jump
 	plr = GlobalVars.vars.plr
 	if actions.canSlash == false:return
 	if plr.playerStates.crouching == true:return
 	if plr.playerStates.dead == true:return
+	if actions.inWallJump == true:return
 	var direction = plr.playerDirection
 	plr.timeStats.time = 0
 	if GlobalVars.vars.worldMode == 2:

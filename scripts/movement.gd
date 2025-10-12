@@ -12,6 +12,8 @@ func extraForce():
 	if not plr.inercy and not plr.extraVelocityConstant and plr.extraForceTime <= 0:
 		plr.extraForce = Vector3.ZERO
 		plr.keepDirectionOnExtraForce = false
+		if plr.playerStates.inKnockback == true:
+			plr.playerStates.inKnockback = false
 	if plr.extraForceTime > 0:
 		if GlobalVars.vars.worldMode == 1:
 			
@@ -66,6 +68,7 @@ func _knockBack(origin: Vector3, force: float):
 	plr.extraForce.y = force
 	plr.extraForceTime = .15
 	plr.keepDirectionOnExtraForce = true
+	plr.playerStates.inKnockback = true
 	plr.inercy = true
 func _process(delta: float) -> void: 
 	#state speeds
