@@ -13,7 +13,7 @@ var extraforceTime: float
 var inercy: bool
 var inAir = false
 var wasOnFloor: bool = false
-var wantedVel = 0
+var targetVel: Vector3
 func cancelAxis(vector,basis):
 	if vector == Vector3.ZERO:
 		return vector 
@@ -36,13 +36,13 @@ func extraForce(delta):
 	if extraforceTime > 0:
 		extraforceTime -= delta		
 		if GlobalVars.vars.worldMode == 1:
-			velocity = cancelAxis(extraforce,transform.basis) * Vector3(
+			targetVel = cancelAxis(extraforce,transform.basis) * Vector3(
 				abs(extraforce.x),
 				abs(extraforce.y),
 				abs(extraforce.z)
 				)
 		else:
-			velocity = extraforce
+			targetVel = extraforce
 		velocity.y = extraforce.y
 func _damage(damage):
 	print(damage)
@@ -59,8 +59,8 @@ func _input(event: InputEvent) -> void: #-debug
 			_damage(10)
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
-	if not inercy and extraforceTime <= 0:
-		velocity += get_gravity() * delta
+	if inAir == true and extraforceTime <= 0:
+		velocity.y += get_gravity().y * delta
 	# Handle jump.
 
 	# Get the input direction and handle the movement/deceleration.
@@ -71,11 +71,13 @@ func _physics_process(delta: float) -> void:
 	extraForce(delta)
 	if extraforceTime <= 0 and inercy == false:
 		if direction:
-			velocity.x = direction.x * stats.speed
-			velocity.z = direction.z * stats.speed
+			targetVel.x = direction.x * stats.speed
+			targetVel.z = direction.z * stats.speed
 		else:
-			velocity.x = move_toward(velocity.x, 0, stats.speed)
-			velocity.z = move_toward(velocity.z, 0, stats.speed)
+			targetVel.x = move_toward(velocity.x, 0, stats.speed)
+			targetVel.z = move_toward(velocity.z, 0, stats.speed)
+	velocity.x = lerpf(velocity.x,targetVel.x,stats.aceleration*delta)
+	velocity.z = lerpf(velocity.z,targetVel.z,stats.aceleration*delta)
 	move_and_slide()
 func _process(delta):
 	if wasOnFloor != is_on_floor():
