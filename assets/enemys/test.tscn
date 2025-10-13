@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://bausjaq0g8nd2"]
+[gd_scene load_steps=6 format=3 uid="uid://bausjaq0g8nd2"]
 
 [ext_resource type="Script" uid="uid://dbtlfelvyb17r" path="res://assets/enemys/enemyMain.gd" id="1_bw7xh"]
+[ext_resource type="Script" uid="uid://x7scybeta14h" path="res://scripts/enemys/behaviorFunctions.lua" id="2_avsts"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bw7xh"]
 albedo_color = Color(1, 0, 0, 1)
@@ -11,8 +12,9 @@ albedo_color = Color(1, 0, 0, 1)
 
 [node name="Test" type="Node3D"]
 
-[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+[node name="CharacterBody3D" type="CharacterBody3D" parent="." node_paths=PackedStringArray("behaviorFunctions")]
 script = ExtResource("1_bw7xh")
+behaviorFunctions = NodePath("behaviorFunctions")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D"]
 material_override = SubResource("StandardMaterial3D_bw7xh")
@@ -22,3 +24,7 @@ mesh = SubResource("BoxMesh_avsts")
 shape = SubResource("BoxShape3D_m8o64")
 
 [node name="Node" type="Node" parent="CharacterBody3D"]
+
+[node name="behaviorFunctions" type="Node" parent="CharacterBody3D" node_paths=PackedStringArray("mainNode")]
+script = ExtResource("2_avsts")
+mainNode = NodePath("..")
