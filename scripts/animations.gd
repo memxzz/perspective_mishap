@@ -3,6 +3,7 @@ var plr
 var playingCustom = false
 var blendTime = .1
 var rotateModelIn2d = true
+var total_playerAngle = false #if true, the player changes direction in a -180 total angle instead of just 55.
 const animationTransforms = {
 	crouching = {
 		size = Vector3(1.393,0.779,1.393),
@@ -31,9 +32,9 @@ func anims(delta):
 	if plr.lastAnim == plr.currAnim:return
 	plr.lastAnim = plr.currAnim
 	plr.animPlay.playback_default_blend_time = blendTime
-
 	plr.animPlay.play(plr.currAnim)
 	plr.animPlay.timer()
+	print(plr.animPlay.current_animation)
 
 func animsConditions():
 	if plr == null:
@@ -43,11 +44,27 @@ func animsConditions():
 	#transform anims
 	blendTime = .1
 	rotateModelIn2d = true
+	total_playerAngle = false
 	if plr.playerStates.crouching == true:
 		plr.currAnimTransform = "crouching"
 	else:
 		plr.currAnimTransform = "normal"
 	#normal anims
+	if plr.playerStates.inKnockback == true and plr.playerStates.inAir:
+		plr.currAnim = "damaged"
+		total_playerAngle = true
+
+		blendTime = 0
+		return
+	if plr.playerStates.dead == true:
+		if plr.curDirection == 1:
+			plr.currAnim = "dead-right"
+		else:
+			plr.currAnim = "dead-left"
+		print(plr.currAnim)
+		total_playerAngle = true
+		blendTime = 0
+		return
 	if plr.playerStates.inSlash == true:
 		#plr.currAnim = "slash"
 		return
@@ -73,6 +90,6 @@ func animsConditions():
 		plr.currAnim = "walk"
 		return
 
-	plr.currAnim = "Idle" #play idle if animation has not been changed
+	plr.currAnim = "idle" #play idle if animation has not been changed
 	
 	

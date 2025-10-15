@@ -3,7 +3,7 @@ extends AnimationPlayer
 @export var fps:float = 17
 
 func timer() -> void:
-	
+	timer_timeout()
 	timerVar.start()
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -12,5 +12,4 @@ func _ready() -> void:
 	timerVar.connect("timeout",Callable(self,"timer_timeout"))
 	print(self.callback_mode_process)
 func timer_timeout():
-	pass
 	advance(1/fps)

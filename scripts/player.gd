@@ -19,6 +19,7 @@ class_name Player
 @onready var animations = $animations
 @onready var raycastScript = $raycast
 #variables:
+var curDirection: int = -1 # current player looking direction, 1 if right, -1 if left (this in 2d)
 var extraVelocityConstant = false
 var currAnim = ""
 var lastAnimTransform = ""
@@ -239,23 +240,32 @@ func _input(event: InputEvent) -> void: #all input
 		if event.keycode == KEY_7 and event.pressed:
 			playerStates.health += 1
 func visualPlayerAngle(delta) -> void:
-	if playerDirection != Vector3.ZERO and keepDirectionOnExtraForce == false:
+	var offset = 0
+	if playerDirection != Vector3.ZERO and (keepDirectionOnExtraForce == false or playerStates.dead):
 		var target = dummy.global_position+playerDirection
 		if inercy == true:
 			target = dummy.global_position+extraForce
 		target.y = dummy.global_position.y
 		if target != dummy.global_position:
 			dummy.look_at(target)
-		var offset = 0
-		
 		if GlobalVars.vars.worldMode == 1  and animations.rotateModelIn2d :
-			var angle_deg = 55 * input_dir.x #multiply by direction (1, 0 or -1)
+			var angle = 55
+			#if animations.total_playerAngle:angle = -180
+			var dir = 1
+			if input_dir.x != 0:
+				dir = input_dir.x
+			curDirection = dir
+			var angle_deg = angle * dir #multiply by direction (1, 0 or -1)
 			var angle_rad = angle_deg * PI / 180.0 
-			offset = -angle_rad #change offsset to inverted angle
+			offset = -angle_rad #change offset to inverted angle
 		rot = dummy.global_rotation.y + offset
 	var speed = 10
 	if GlobalVars.vars.worldMode == 1:
-		model.global_rotation.y = rot
+		var newrot = rot
+		#print(rot,rot - offset)
+		if animations.total_playerAngle and animations.total_playerAngle: #idk how this worked but what it does is player look at                                          	
+			newrot = dummy.global_rotation.y - offset                     #totally rectal angles instead of diagonals when animations require it.
+		model.global_rotation.y = newrot
 	else:
 		model.global_rotation.y = lerp_angle(model.global_rotation.y,rot,delta*10)
 func _ready() -> void:
@@ -305,7 +315,6 @@ var lastvel = Vector3.ZERO
 var rot = -2.5
 var wasOnFloor = false
 func _process(delta: float) -> void:
-	print(velocity)
 	handleTime(delta)
 	collMask()
 	playerSetStates()

@@ -465,9 +465,6 @@ transform = Transform3D(1, 0, 0, 0, 0.754687, 0.656085, 0, -0.656085, 0.754687, 
 [node name="Player" parent="." instance=ExtResource("2_xrng2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.3334, 4.41179, -0.0177641)
 
-[node name="Plane_2" parent="Player/CharacterBody3D/model/Armature/Skeleton3D" index="0"]
-transform = Transform3D(-4.51765e-08, 0.306205, 0.000149916, -0.306193, -1.02643e-06, 0.0050357, 0.00320843, -9.55095e-05, 0.480577, 0.35202, 1.31933, -0.0146008)
-
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(11, 0, 0, 0, 11, 0, 0, 0, 11, 33.974, -43.558, 0)
 visible = false
