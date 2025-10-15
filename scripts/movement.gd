@@ -48,7 +48,9 @@ func velocityAceleration(delta,nBasis):
 		var new_move = plr.move_not_forward(nBasis)
 		plr.targetVel.x = new_move.x
 		plr.targetVel.z = new_move.z
-	if plr.playerStates.health <= 0:return
+	if plr.playerStates.dead == true and plr.playerStates.inAir == false:
+		plr.targetVel = Vector3.ZERO
+	#if plr.playerStates.health <= 0:return
 	plr.velocity.x = lerpf(plr.velocity.x,plr.targetVel.x,plr.stats.acceleration*delta)
 	plr.velocity.z = lerpf(plr.velocity.z,plr.targetVel.z,plr.stats.acceleration*delta)
 func get_Velocity(delta):

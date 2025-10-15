@@ -1,4 +1,5 @@
 extends CharacterBody3D
+class_name Player
 #nodes:
 @onready var camera = $cam/extra/cam/move/Camera3D
 @onready var moveCam = $cam/extra/cam
@@ -52,6 +53,10 @@ var timeStats: Dictionary = {
 		time = 0,
 		maxTime = 1
 	},
+	damaged = {
+		time = 0,
+		maxTime = 1.2
+	},
 	fallTime = 0,
 }
 var inputs = {
@@ -100,11 +105,12 @@ var playerStates: Dictionary = {
 	running = false,
 	health = 100.0,
 	dead = false,
-	inKnockback = false,
+	damaged = false,
 	#actions
 	inSlash = false,
 	inLongJump = false,
-	inWallJump = false
+	inWallJump = false,
+	inKnockback = false,
 }
 const cameraConfs: Dictionary = {
 	Persp = {
@@ -125,10 +131,18 @@ func handleTime(delta) -> void:
 		timeStats.fallTime = 0
 		inercy = false
 		extraForceTime = 0
+	if timeStats.damaged.time > 0:
+		playerStates.damaged = true
+	else:
+		playerStates.damaged = false
 	if extraForceTime > 0:
-		extraForceTime -= 1*delta
+		extraForceTime -= delta
 		if extraForceTime <= 0:
 			extraForceTime = 0
+	if timeStats.damaged.time > 0:
+		timeStats.damaged.time -= delta
+		if timeStats.damaged.time <= 0:
+			timeStats.damaged.time = 0
 func cancelAxis(vector,basis):
 	if vector == Vector3.ZERO:
 		return vector 
@@ -178,10 +192,12 @@ func die() -> void:
 	await get_tree().create_timer(5).timeout
 	spawn()
 func _damage(props: Dictionary) -> void:
+	if playerStates.dead == true:return
 	var damager = props.damager
 	var damage = props.damage
 	var knockbackForce = props.knockbackForce
 	playerStates.health -= damage
+	timeStats.damaged.time = timeStats.damaged.maxTime
 	movement._knockBack(damager.global_position,knockbackForce)
 func playerSetStates() -> void:
 	if extraForceTime <= 0 and extraVelocityConstant == false :
@@ -289,6 +305,7 @@ var lastvel = Vector3.ZERO
 var rot = -2.5
 var wasOnFloor = false
 func _process(delta: float) -> void:
+	print(velocity)
 	handleTime(delta)
 	collMask()
 	playerSetStates()
